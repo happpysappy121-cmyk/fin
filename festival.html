@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festivals of Uttarakhand | Brahma Kamal Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            /* Brahma Kamal Signature Palette */
+            --petal-white: #FCFDF7;
+            --kamal-purple: #6D2E7A;
+            --kamal-gold: #E3B04B;
+            --leaf-green: #2D4739;
+            --soft-shadow: rgba(45, 71, 57, 0.1);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        body { 
+            background: var(--petal-white); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; color: var(--leaf-green);
+            padding-bottom: 50px;
+            background-image: radial-gradient(circle at 100% 0%, rgba(109, 46, 122, 0.05) 0%, transparent 25%);
+        }
+
+        /* --- Header --- */
+        .header-nav {
+            padding: 30px 25px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(252, 253, 247, 0.8); backdrop-filter: blur(10px);
+        }
+
+        .circle-btn {
+            width: 45px; height: 45px; border-radius: 16px;
+            background: white; border: 1px solid rgba(109, 46, 122, 0.1);
+            color: var(--kamal-purple); display: flex; align-items: center; justify-content: center;
+            font-size: 20px; box-shadow: 0 4px 12px var(--soft-shadow);
+        }
+
+        /* --- Hero --- */
+        .hero-section { padding: 20px 25px; }
+        .hero-section h1 { 
+            font-family: 'Playfair Display', serif; font-size: 38px; margin: 0; 
+            color: var(--kamal-purple); line-height: 1.1; 
+        }
+        .hero-section p { color: #7a8a81; margin: 10px 0 0; font-weight: 500; font-size: 15px; }
+
+        /* --- List --- */
+        .festival-container { padding: 10px 20px; display: grid; gap: 20px; }
+
+        .festival-card {
+            background: white; border-radius: 35px; overflow: hidden;
+            box-shadow: 0 10px 30px var(--soft-shadow);
+            display: flex; flex-direction: column;
+            border: 1px solid rgba(45, 71, 57, 0.05);
+        }
+
+        .card-img-box { height: 200px; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .tag {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(255,255,255,0.9); padding: 6px 14px;
+            border-radius: 12px; font-size: 11px; font-weight: 800;
+            color: var(--kamal-purple); text-transform: uppercase;
+        }
+
+        .card-content { padding: 20px 25px; }
+        .card-content h3 { 
+            margin: 0; font-size: 22px; font-family: 'Playfair Display', serif;
+            color: var(--leaf-green);
+        }
+        
+        .meta-row { display: flex; gap: 15px; margin-top: 8px; }
+        .meta-item { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #7a8a81; font-weight: 600; }
+        .meta-item i { color: var(--kamal-gold); }
+
+        .price-row { 
+            margin-top: 15px; display: flex; justify-content: space-between; 
+            align-items: center; border-top: 1px solid #f0f4f1; padding-top: 15px;
+        }
+        .price-label { font-size: 20px; font-weight: 800; color: var(--kamal-purple); }
+        .price-label span { font-size: 11px; opacity: 0.6; font-weight: 500; }
+
+        /* --- Modal --- */
+        .modal {
+            position: fixed; inset: 0; background: var(--petal-white);
+            z-index: 2000; display: none; flex-direction: column; overflow-y: auto;
+        }
+
+        .modal-header { height: 40vh; position: relative; }
+        .modal-header img { width: 100%; height: 100%; object-fit: cover; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
+        .close-overlay { position: absolute; top: 30px; left: 25px; }
+
+        .modal-body { padding: 30px 25px 120px; }
+        .modal-body h2 { font-family: 'Playfair Display', serif; font-size: 32px; margin: 0; color: var(--kamal-purple); }
+        
+        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
+        .spec-card { background: #f0f4f1; padding: 15px; border-radius: 20px; display: flex; align-items: center; gap: 10px; }
+        .spec-card i { font-size: 24px; color: var(--kamal-gold); }
+        .spec-text span { font-size: 10px; text-transform: uppercase; font-weight: 800; opacity: 0.5; display: block; }
+        .spec-text p { margin: 2px 0 0; font-size: 13px; font-weight: 700; }
+
+        .description { line-height: 1.7; font-size: 15px; color: #5a6a61; margin: 25px 0; font-weight: 500; }
+
+        .action-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; background: white;
+            padding: 20px 25px 40px; border-top-left-radius: 40px; border-top-right-radius: 40px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;
+        }
+        .book-btn { background: var(--kamal-purple); color: white; padding: 18px 40px; border-radius: 22px; border: none; font-weight: 800; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+    <nav class="header-nav">
+        <button class="circle-btn" onclick="window.history.back()"><i class="ph ph-arrow-left"></i></button>
+        <button class="circle-btn"><i class="ph ph-leaf"></i></button>
+    </nav>
+
+    <div class="hero-section">
+        <h1>Vibrant<br>Festivals</h1>
+        <p>Celebrate Uttarakhand's cultural heritage.</p>
+    </div>
+
+    <div class="festival-container" id="festivalList"></div>
+
+    <div id="festivalModal" class="modal">
+        <div class="modal-header">
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400" id="mImg">
+            <div class="close-overlay">
+                <button class="circle-btn" onclick="closeModal()" style="background: rgba(255,255,255,0.3); border: none; color: white;"><i class="ph ph-x"></i></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <h2 id="mTitle"></h2>
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <i class="ph ph-calendar"></i>
+                    <div class="spec-text"><span>Month</span><p id="mMonth"></p></div>
+                </div>
+                <div class="spec-card">
+                    <i class="ph ph-map-pin"></i>
+                    <div class="spec-text"><span>Region</span><p id="mRegion"></p></div>
+                </div>
+            </div>
+            
+            <p class="description" id="mDesc"></p>
+        </div>
+        <div class="action-bar">
+            <div class="price-label" id="mPrice"></div>
+            <button class="book-btn">Celebrate</button>
+        </div>
+    </div>
+
+    <script>
+        const festivalData = [
+            { name: "Phool Dei", month: "March/April", region: "Garhwal & Kumaon", activity: "Floral Decorations", food: "Sei (Rice Flour Pudding)", desc: "The harvest festival of flowers, where children put flowers at the doorsteps of neighbors to bring prosperity.", img: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=1200" },
+            { name: "Harela", month: "July", region: "Kumaon", activity: "Sowing Seeds", food: "Puri & Kheer", desc: "Commemorating the wedding of Lord Shiva and Parvati, it signifies the onset of the monsoon and agricultural bounty.", img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200" },
+            { name: "Nanda Devi Raj Jat", month: "Aug/Sept (12 Years)", region: "Chamoli", activity: "Longest Trek Pilgrimage", food: "Traditional Bhandara", desc: "A massive pilgrimage honoring Goddess Nanda Devi. It is known as the 'Himalayan Mahakumbh'.", img: "https://images.unsplash.com/photo-1544735030-3663bc64763f?q=80&w=1200" },
+            { name: "Kumbh Mela", month: "Jan - April (12 Years)", region: "Haridwar", activity: "Holy Dip in Ganga", food: "Satvik Meals", desc: "The largest spiritual gathering in the world, where devotees bathe in the holy Ganges to wash away sins.", img: "https://images.unsplash.com/photo-1545229815-5683226f3972?q=80&w=1200" },
+            { name: "Bagwal (Egas)", month: "Oct/Nov", region: "Garhwal", activity: "Folk Dancing & Fire", food: "Swala & Pakora", desc: "Celebrated 11 days after Diwali, it marks the return of Lord Ram to Ayodhya as the news reached the hills late.", img: "https://images.unsplash.com/photo-1605333396915-47ed6b68a00e?q=80&w=1200" },
+            { name: "Ghughuti (Kale Kauva)", month: "January", region: "Kumaon", activity: "Feeding Crows", food: "Deep Fried Dough Sweets", desc: "Part of Makar Sankranti, where sweet 'Ghughuti' are made into necklaces and offered to migratory crows.", img: "https://images.unsplash.com/photo-1514416205405-075ab2f15964?q=80&w=1200" },
+            { name: "Jithi", month: "April", region: "Garhwal", activity: "Worshipping Deities", food: "Local Delicacies", desc: "A celebration of the Sun God's entry into the northern hemisphere, marking the end of winter.", img: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200" },
+            { name: "Kandali Festival", month: "Aug/Sept (12 Years)", region: "Pithoragarh", activity: "Destroying Weed Plants", food: "Kumaoni Feast", desc: "The Shauka tribe celebrates this to mark the blooming of the Kandali flower and to commemorate victory in battle.", img: "https://images.unsplash.com/photo-1464457312035-3d7d0e0c058e?q=80&w=1200" },
+            { name: "Uttarayani Mela", month: "January", region: "Bageshwar", activity: "Folk Arts & Fairs", food: "Sweet Potato & Khichdi", desc: "A massive fair at the confluence of Saryu and Gomti rivers, celebrating the sun's northward journey.", img: "https://images.unsplash.com/photo-1518005020410-1c05d0901e85?q=80&w=1200" },
+            { name: "Bikhoti", month: "April", region: "Almora", activity: "Shiva Worship", food: "Pahadi Dal", desc: "Marking the Hindu New Year, it involves taking holy dips in rivers and celebrating at local shrines.", img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1200" },
+            { name: "Ghee Sankranti", month: "August", region: "Statewide", activity: "Ghee Consumption", food: "Ghee & Bread", desc: "Celebrated when crops are lush. Tradition says if you don't eat ghee today, you'll be reborn as a snail.", img: "https://images.unsplash.com/photo-1589135340847-57a6b32370ca?q=80&w=1200" },
+            { name: "Vat Savitri", month: "May/June", region: "Statewide", activity: "Worshipping Banyan Tree", food: "Puri & Halwa", desc: "Married women pray for the long life of their husbands, recalling the legend of Savitri and Satyavan.", img: "https://images.unsplash.com/photo-1621360841013-c7683c659ec6?q=80&w=1200" },
+            { name: "Hill Jatra", month: "August", region: "Pithoragarh", activity: "Mask Dance", food: "Pahadi Cuisine", desc: "A pastoral theater festival featuring the 'Lakhia Bhoot' mask dance to pray for good crops.", img: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=1200" },
+            { name: "Basant Panchami", month: "Feb", region: "Statewide", activity: "Wearing Yellow Clothing", food: "Yellow Sweet Rice", desc: "Welcoming the spring season and honoring Goddess Saraswati, the patron of knowledge and arts.", img: "https://images.unsplash.com/photo-1544735030-3663bc64763f?q=80&w=1200" },
+            { name: "Bat Savitri", month: "June", region: "Garhwal", activity: "Fasting & Prayer", food: "Seasonal Fruits", desc: "Specifically celebrated by Garhwali women for familial prosperity and longevity.", img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1200" },
+            { name: "Ganga Dusshera", month: "May/June", region: "Haridwar/Rishikesh", activity: "Floating Lamps", food: "Milk-based sweets", desc: "Celebrating the day the holy River Ganges descended from heaven to earth.", img: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200" }
+        ];
+
+        function renderList() {
+            const container = document.getElementById('festivalList');
+            container.innerHTML = festivalData.map((item, i) => `
+                <div class="festival-card" onclick="openModal(${i})">
+                    <div class="card-img-box">
+                        <img src="${item.img}">
+                        <div class="tag">${item.region}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${item.name}</h3>
+                        <div class="meta-row">
+                            <div class="meta-item"><i class="ph ph-calendar"></i> ${item.month}</div>
+                            <div class="meta-item"><i class="ph ph-users"></i> ${item.activity}</div>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-label">${item.food} <span>/ traditional</span></div>
+                            <div class="circle-btn" style="width:35px; height:35px; font-size:16px"><i class="ph ph-caret-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(i) {
+            const d = festivalData[i];
+            document.getElementById('mImg').src = d.img;
+            document.getElementById('mTitle').innerText = d.name;
+            document.getElementById('mMonth').innerText = d.month;
+            document.getElementById('mRegion').innerText = d.region;
+            document.getElementById('mDesc').innerText = d.desc;
+            document.getElementById('mPrice').innerHTML = `${d.food} <span>/food</span>`;
+            
+            document.getElementById('festivalModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('festivalModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        renderList();
+    </script>
+</body>
+</html>
+           

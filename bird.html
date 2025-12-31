@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himalayan Avian Trails | Brahma Kamal Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            /* Brahma Kamal Signature Palette */
+            --petal-white: #FCFDF7;
+            --kamal-purple: #6D2E7A;
+            --kamal-gold: #E3B04B;
+            --leaf-green: #2D4739;
+            --soft-shadow: rgba(45, 71, 57, 0.1);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        
+        body { 
+            background: var(--petal-white); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; color: var(--leaf-green);
+            padding-bottom: 50px;
+            background-image: radial-gradient(circle at 0% 100%, rgba(109, 46, 122, 0.05) 0%, transparent 25%);
+        }
+
+        /* --- Header --- */
+        .header-nav {
+            padding: 30px 25px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(252, 253, 247, 0.8); backdrop-filter: blur(10px);
+        }
+
+        .circle-btn {
+            width: 45px; height: 45px; border-radius: 16px;
+            background: white; border: 1px solid rgba(109, 46, 122, 0.1);
+            color: var(--kamal-purple); display: flex; align-items: center; justify-content: center;
+            font-size: 20px; box-shadow: 0 4px 12px var(--soft-shadow);
+        }
+
+        /* --- Hero --- */
+        .hero-section { padding: 20px 25px; }
+        .hero-section h1 { 
+            font-family: 'Playfair Display', serif; font-size: 38px; margin: 0; 
+            color: var(--kamal-purple); line-height: 1.1; 
+        }
+        .hero-section p { color: #7a8a81; margin: 10px 0 0; font-weight: 500; font-size: 15px; }
+
+        /* --- List --- */
+        .bird-container { padding: 10px 20px; display: grid; gap: 20px; }
+
+        .spot-card {
+            background: white; border-radius: 35px; overflow: hidden;
+            box-shadow: 0 10px 30px var(--soft-shadow);
+            display: flex; flex-direction: column;
+            border: 1px solid rgba(45, 71, 57, 0.05);
+        }
+
+        .card-img-box { height: 200px; position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .tag {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(255,255,255,0.9); padding: 6px 14px;
+            border-radius: 12px; font-size: 11px; font-weight: 800;
+            color: var(--kamal-purple); text-transform: uppercase;
+        }
+
+        .card-content { padding: 20px 25px; }
+        .card-content h3 { 
+            margin: 0; font-size: 22px; font-family: 'Playfair Display', serif;
+            color: var(--leaf-green);
+        }
+        
+        .meta-row { display: flex; gap: 15px; margin-top: 8px; }
+        .meta-item { display: flex; align-items: center; gap: 5px; font-size: 13px; color: #7a8a81; font-weight: 600; }
+        .meta-item i { color: var(--kamal-gold); }
+
+        .price-row { 
+            margin-top: 15px; display: flex; justify-content: space-between; 
+            align-items: center; border-top: 1px solid #f0f4f1; padding-top: 15px;
+        }
+        .price-label { font-size: 20px; font-weight: 800; color: var(--kamal-purple); }
+        .price-label span { font-size: 11px; opacity: 0.6; font-weight: 500; }
+
+        /* --- Modal --- */
+        .modal {
+            position: fixed; inset: 0; background: var(--petal-white);
+            z-index: 2000; display: none; flex-direction: column; overflow-y: auto;
+        }
+
+        .modal-header { height: 40vh; position: relative; }
+        .modal-header img { width: 100%; height: 100%; object-fit: cover; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px; }
+        .close-overlay { position: absolute; top: 30px; left: 25px; }
+
+        .modal-body { padding: 30px 25px 120px; }
+        .modal-body h2 { font-family: 'Playfair Display', serif; font-size: 32px; margin: 0; color: var(--kamal-purple); }
+        
+        .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
+        .spec-card { background: #f0f4f1; padding: 15px; border-radius: 20px; display: flex; align-items: center; gap: 10px; }
+        .spec-card i { font-size: 24px; color: var(--kamal-gold); }
+        .spec-text span { font-size: 10px; text-transform: uppercase; font-weight: 800; opacity: 0.5; display: block; }
+        .spec-text p { margin: 2px 0 0; font-size: 13px; font-weight: 700; }
+
+        .checklist-title { font-weight: 800; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--kamal-purple); margin-bottom: 15px; display: block; }
+        .check-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .check-item { background: white; border: 1px solid rgba(45, 71, 57, 0.1); padding: 10px 16px; border-radius: 15px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .check-item i { color: var(--leaf-green); }
+
+        .description { line-height: 1.7; font-size: 15px; color: #5a6a61; margin: 25px 0; font-weight: 500; }
+
+        .action-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; background: white;
+            padding: 20px 25px 40px; border-top-left-radius: 40px; border-top-right-radius: 40px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center;
+        }
+        .book-btn { background: var(--kamal-purple); color: white; padding: 18px 40px; border-radius: 22px; border: none; font-weight: 800; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+    <nav class="header-nav">
+        <button class="circle-btn" onclick="window.history.back()"><i class="ph ph-arrow-left"></i></button>
+        <button class="circle-btn"><i class="ph ph-bird"></i></button>
+    </nav>
+
+    <div class="hero-section">
+        <h1>Avian<br>Trails</h1>
+        <p>A journey through the birding paradise of India.</p>
+    </div>
+
+    <div class="bird-container" id="birdList"></div>
+
+    <div id="birdModal" class="modal">
+        <div class="modal-header">
+            <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=400" id="mImg">
+            <div class="close-overlay">
+                <button class="circle-btn" onclick="closeModal()" style="background: rgba(255,255,255,0.3); border: none; color: white;"><i class="ph ph-x"></i></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <h2 id="mTitle"></h2>
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <i class="ph ph-mountains"></i>
+                    <div class="spec-text"><span>Altitude</span><p id="mAlt"></p></div>
+                </div>
+                <div class="spec-card">
+                    <i class="ph ph-calendar-check"></i>
+                    <div class="spec-text"><span>Best Season</span><p id="mSeason"></p></div>
+                </div>
+            </div>
+            
+            <span class="checklist-title">Key Species to Watch</span>
+            <div class="check-grid" id="mChecklist"></div>
+
+            <p class="description" id="mDesc"></p>
+        </div>
+        <div class="action-bar">
+            <div class="price-label"><span id="mPrice"></span> <span>/ Guide</span></div>
+            <button class="book-btn">Book Birding Tour</button>
+        </div>
+    </div>
+
+    <script>
+        const birdData = [
+            { name: "Pangot & Sigri", habitat: "Oak & Pine Forest", season: "Oct - May", alt: "1900m", price: "₹800", desc: "A world-renowned birding destination with over 250 recorded species, offering incredible photography opportunities.", checklist: ["Cheer Pheasant", "Koklass Pheasant", "Rufous-bellied Woodpecker", "Blue-capped Redstart"], img: "https://images.unsplash.com/photo-1552410260-0fd9b577afa6?q=80&w=800" },
+            { name: "Sattal Lakes", habitat: "Freshwater Wetlands", season: "Sept - April", alt: "1370m", price: "₹600", desc: "A unique cluster of seven interconnected freshwater lakes surrounded by dense forest, attracting diverse migratory birds.", checklist: ["Great Barbet", "Plumbeous Water Redstart", "Crested Kingfisher", "Green-backed Tit"], img: "https://images.unsplash.com/photo-1470619611593-95c89ff22244?q=80&w=800" },
+            { name: "Chopta Valley", habitat: "Alpine Meadows", season: "April - June", alt: "2680m", price: "₹1000", desc: "Often called the 'Mini Switzerland of India', Chopta is the best place to spot high-altitude Himalayan specialists.", checklist: ["Himalayan Monal", "Snow Partridge", "Fire-tailed Sunbird", "Himalayan Swiftlet"], img: "https://images.unsplash.com/photo-1444464666168-49d633b867ad?q=80&w=800" },
+            { name: "Munsiyari", habitat: "High Altitude Ridges", season: "March - June", alt: "2200m", price: "₹1200", desc: "The gateway to the Johar Valley, Munsiyari offers sightings of rare raptors and pheasants against the Panchachuli peaks.", checklist: ["Bearded Vulture", "Golden Eagle", "Satyr Tragopan", "Little Forktail"], img: "https://images.unsplash.com/photo-1452570053594-1b985d6ea890?q=80&w=800" },
+            { name: "Asan Barrage", habitat: "Riverine Wetland", season: "Oct - March", alt: "400m", price: "₹500", desc: "A critical wintering site for migratory waterfowl traveling via the Central Asian Flyway.", checklist: ["Ruddy Shelduck", "Red-crested Pochard", "Bar-headed Goose", "Osprey"], img: "https://images.unsplash.com/photo-1520638324081-68b7dee4d6b4?q=80&w=800" },
+            { name: "Binsar Sanctuary", habitat: "Oak Forest Peak", season: "Year-round", alt: "2400m", price: "₹450", desc: "An Important Bird Area (IBA) with spectacular views and a high density of resident Himalayan bird species.", checklist: ["Fork-tailed Swift", "Black-headed Jay", "Grey-winged Blackbird", "Nutcracker"], img: "https://images.unsplash.com/photo-1516233501032-2dd975334ba7?q=80&w=800" },
+            { name: "Jim Corbett (Kosi)", habitat: "Riverine & Sal", season: "Nov - June", alt: "400-1200m", price: "₹900", desc: "Beyond tigers, the Kosi river banks in Corbett provide sightings of elusive fish eagles and kingfishers.", checklist: ["Pallas's Fish Eagle", "Tawny Fish Owl", "Wallcreeper", "Ibisbill"], img: "https://images.unsplash.com/photo-1480044965905-02098d419e96?q=80&w=800" },
+            { name: "Kedarnath WLS", habitat: "Temperate Forest", season: "May - Oct", alt: "1160-7068m", price: "₹700", desc: "A vast sanctuary protecting the high-altitude forests of the Mandakini valley, rich in biodiversity.", checklist: ["Kalij Pheasant", "White-throated Laughingthrush", "Yellow-billed Blue Magpie", "Snow Pigeon"], img: "https://images.unsplash.com/photo-1555169062-013468b47731?q=80&w=800" },
+            { name: "Dhaniyakot", habitat: "Valleys & Streams", season: "Oct - April", alt: "1100m", price: "₹550", desc: "A hidden gem in Kumaon for spotting flycatchers and various species of Himalayan thrushes.", checklist: ["Verditer Flycatcher", "Asian Paradise Flycatcher", "Whistling Thrush", "Grey Wagtail"], img: "https://images.unsplash.com/photo-1549480017-d76466a4b7e8?q=80&w=800" },
+            { name: "Devalsari", habitat: "Deodar Forest", season: "March - June", alt: "1800m", price: "₹650", desc: "Famous for its Tit-warblers and woodpeckers, Devalsari is a pristine butterfly and birding haven.", checklist: ["Brown-fronted Woodpecker", "Black-throated Tit", "Himalayan Bluetail", "Grey-hooded Warbler"], img: "https://images.unsplash.com/photo-1518992028580-6d57bd80f2dd?q=80&w=800" }
+        ];
+
+        function renderList() {
+            const container = document.getElementById('birdList');
+            container.innerHTML = birdData.map((item, i) => `
+                <div class="spot-card" onclick="openModal(${i})">
+                    <div class="card-img-box">
+                        <img src="${item.img}">
+                        <div class="tag">${item.habitat}</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${item.name}</h3>
+                        <div class="meta-row">
+                            <div class="meta-item"><i class="ph ph-mountains"></i> ${item.alt}</div>
+                            <div class="meta-item"><i class="ph ph-calendar"></i> ${item.season}</div>
+                        </div>
+                        <div class="price-row">
+                            <div class="price-label">${item.price} <span>/ day</span></div>
+                            <div class="circle-btn" style="width:35px; height:35px; font-size:16px"><i class="ph ph-caret-right"></i></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(i) {
+            const d = birdData[i];
+            document.getElementById('mImg').src = d.img;
+            document.getElementById('mTitle').innerText = d.name;
+            document.getElementById('mSeason').innerText = d.season;
+            document.getElementById('mAlt').innerText = d.alt;
+            document.getElementById('mDesc').innerText = d.desc;
+            document.getElementById('mPrice').innerText = d.price;
+            
+            const check = document.getElementById('mChecklist');
+            check.innerHTML = d.checklist.map(bird => `
+                <div class="check-item"><i class="ph-fill ph-bird"></i> ${bird}</div>
+            `).join('');
+
+            document.getElementById('birdModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('birdModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        renderList();
+    </script>
+</body>
+</html>

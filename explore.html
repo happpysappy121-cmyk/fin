@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBhoomi Uttarakhand - Explore Destinations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FDFBF7;
+            --heritage: #B87333; /* Copper/Terracotta */
+            --crafts: #7D6B5D;
+            --birds: #5B8291; /* Himalayan Blue */
+            --festivals: #D97706; /* Marigold Orange */
+            --culture: #4B6344; /* Deep Sage */
+            --text: #2D3A30;
+            --glass: rgba(255, 255, 255, 0.7);
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: var(--bg); 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.03'%3E%3Cpath d='M50 0C55 35 90 40 100 50C90 60 55 65 50 100C45 65 10 60 0 50C10 40 45 35 50 0Z' fill='%234A5D4E'/%3E%3C/svg%3E");
+            background-size: 300px;
+            background-repeat: repeat;
+            color: var(--text); 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- Custom Cursor/Interaction Layer --- */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            opacity: 0.4; pointer-events: none; z-index: 100;
+        }
+
+        /* --- Airy Hero Section --- */
+        .hero {
+            height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .hero-img {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(253, 251, 247, 0) 50%, var(--bg) 100%),
+                        url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&q=80&w=1200') center/cover;
+            transform: scale(1.1);
+            filter: saturate(0.8) contrast(0.9);
+        }
+
+        .hero-content {
+            z-index: 10;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 12vw, 5rem);
+            font-weight: 500;
+            font-style: italic;
+            color: var(--text);
+            line-height: 0.8;
+            letter-spacing: -2px;
+        }
+
+        /* --- Floating Organic Grid --- */
+        .experience-container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 40px 20px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .float-card {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            background: white;
+            padding: 20px;
+            border-radius: 40px 15px 40px 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Unique float shifts for organic feel */
+        .float-card:nth-child(odd) { transform: translateX(-10px); }
+        .float-card:nth-child(even) { transform: translateX(10px); }
+
+        .float-card:hover {
+            transform: scale(1.02) translateY(-10px);
+            box-shadow: 0 20px 50px rgba(75, 99, 68, 0.1);
+            border-color: rgba(75, 99, 68, 0.2);
+        }
+
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            background: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        .float-card:hover .icon-circle {
+            background: var(--text);
+            transform: rotate(15deg);
+        }
+
+        .float-card svg {
+            width: 30px;
+            height: 30px;
+            stroke-width: 1.2;
+            fill: none;
+            transition: var(--transition);
+        }
+
+        .float-card:hover svg {
+            stroke: #fff;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-meta span {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .card-meta h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        /* --- Colors for specific categories --- */
+        .cat-heritage { color: var(--heritage); }
+        .cat-crafts { color: var(--crafts); }
+        .cat-birds { color: var(--birds); }
+        .cat-festivals { color: var(--festivals); }
+        .cat-culture { color: var(--culture); }
+
+        /* --- Seasonal Discovery (Interactive) --- */
+        .discovery-footer {
+            margin-top: 50px;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 50px;
+            text-align: center;
+            border: 1px dashed rgba(0,0,0,0.1);
+        }
+
+        .discovery-footer p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            font-size: 0.6rem;
+            letter-spacing: 10px;
+            opacity: 0.3;
+            text-transform: uppercase;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+
+    <section class="hero">
+        <div class="hero-img"></div>
+      
+    </section>
+
+    <div class="experience-container">
+        
+        <a href="heritage.html" class="float-card">
+            <div class="icon-circle">
+                <svg viewBox="0 0 24 24" stroke="var(--heritage)"><path d="M12 21l-9-5V7l9-5 9 5v9l-9 5zM12 22V12M12 12L3 7M12 12l9-5"/></svg>
+            </div>
+            <div class="card-meta cat-heritage">
+                <span>Ancestral</span>
+                <h3>Heritage</h3>
+            </div>
+        </a>
+
+        <a href="craft.html" class="float-card">
+            <div class="icon-circle">
+                <svg viewBox="0 0 24 24" stroke="var(--crafts)"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l5 5M11 11l1 1"/></svg>
+            </div>
+            <div class="card-meta cat-crafts">
+                <span>Handmade</span>
+                <h3>Crafts</h3>
+            </div>
+        </a>
+
+        <a href="bird.html" class="float-card">
+            <div class="icon-circle">
+                <svg viewBox="0 0 24 24" stroke="var(--birds)"><path d="M16 7c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10S21.5 7 16 7zM16 7V2M8 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM21 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="card-meta cat-birds">
+                <span>Wildlife</span>
+                <h3>Birdwatching</h3>
+            </div>
+        </a>
+
+        <a href="festival.html" class="float-card">
+            <div class="icon-circle">
+                <svg viewBox="0 0 24 24" stroke="var(--festivals)"><path d="M12 2a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10s10-4.5 10-10a10 10 0 0 0-10-10zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zM12 6v6l4 2"/></svg>
+            </div>
+            <div class="card-meta cat-festivals">
+                <span>Celebration</span>
+                <h3>Festivals</h3>
+            </div>
+        </a>
+
+        <a href="culture.html" class="float-card">
+            <div class="icon-circle">
+                <svg viewBox="0 0 24 24" stroke="var(--culture)"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+            </div>
+            <div class="card-meta cat-culture">
+                <span>Ethos</span>
+                <h3>Culture</h3>
+            </div>
+        </a>
+
+    <script>
+        // Improved parallax effect with performance optimizations
+        let ticking = false;
+        
+        function updateParallax() {
+            const cards = document.querySelectorAll('.float-card');
+            const scrolled = window.pageYOffset;
+            
+            cards.forEach((card, index) => {
+                const speed = 0.03 * (index + 1); // Reduced speed for subtler effect
+                const initialX = index % 2 === 0 ? 10 : -10; // Even cards: +10px, Odd: -10px
+                const parallaxY = scrolled * speed;
+                
+                // Combine initial translateX with parallax translateY
+                card.style.transform = `translateX(${initialX}px) translateY(${parallaxY}px)`;
+            });
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+        
+        // Initial call to set positions
+        updateParallax();
+    </script>
+</body>
+</html>
